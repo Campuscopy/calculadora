@@ -1,0 +1,186 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="theme-color" content="#0e1424">
+<title>Calculadora de impressão | Campus Copy</title>
+<meta name="description" content="Calcule suas impressões A4 na Campus Copy. Escolha as páginas, o papel e envie seu orçamento pelo WhatsApp.">
+<meta property="og:title" content="Calculadora de impressão • Campus Copy">
+<meta property="og:description" content="Seu orçamento em poucos toques. P&B, colorida e papéis especiais.">
+<link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='8' fill='%230e1424'/%3E%3Cpath d='M10 5h12v22H10z' fill='%23e8ecfa'/%3E%3Cpath d='M13 12h6m-6 4h6m-6 4h4' stroke='%230096df' stroke-width='2'/%3E%3C/svg%3E">
+<link rel="stylesheet" href="style.css">
+<script src="app.js" defer>
+</script>
+</head>
+<body>
+<main>
+<header>
+<div class="brand">CAMPUS COPY <span class="cmyk" aria-hidden="true">
+<i>
+</i>
+<i>
+</i>
+<i>
+</i>
+</span>
+</div>
+<h1>Calculadora de impressão</h1>
+<p>Campus Copy, papel A4. Preços por página.</p>
+</header>
+<p class="label" id="print-type-label">Tipo de impressão</p>
+<div class="tabs" role="group" aria-labelledby="print-type-label">
+<button type="button" data-color="pb" aria-pressed="true">
+<span class="type-dot mono" aria-hidden="true">
+</span>Preto e branco (P&B)</button>
+<button type="button" data-color="color" aria-pressed="false">
+<span class="type-dot color" aria-hidden="true">
+</span>Colorida</button>
+</div>
+<section class="inputs" aria-label="Configure sua impressão">
+<label for="pages" class="label">Quantidade de páginas</label>
+<div class="quantity">
+<button id="minus" type="button" aria-label="Diminuir uma página">−</button>
+<input id="pages" type="number" inputmode="numeric" min="1" max="100000" step="1" value="1" aria-describedby="page-help error">
+<button id="plus" type="button" aria-label="Adicionar uma página">+</button>
+</div>
+<div class="presets" role="group" aria-label="Quantidades rápidas">
+<button type="button" data-pages="1">1</button>
+<button type="button" data-pages="3">3</button>
+<button type="button" data-pages="10">10</button>
+<button type="button" data-pages="20">20</button>
+<button type="button" data-pages="50">50</button>
+<button type="button" data-pages="100">100</button>
+</div>
+<p class="hint" id="page-help">Conte cada lado impresso como uma página. Ex.: 10 páginas frente e verso usam 5 folhas.</p>
+<p id="error" role="alert" hidden>Informe uma quantidade inteira entre 1 e 100.000 páginas.</p>
+<label class="check">
+<input id="duplex" type="checkbox"> Frente e verso</label>
+<label class="label paper-label" for="paper">Tipo de papel</label>
+<select id="paper">
+<option value="0">Sulfite 75 g · sem acréscimo</option>
+<option value="1">Sulfite 90 g · + R$ 0,10/folha</option>
+<option value="2">Sulfite 120 g · + R$ 0,15/folha</option>
+<option value="3">Monolúcido 90 g · + R$ 0,30/folha</option>
+<option value="4">Monolúcido 120 g · + R$ 0,40/folha</option>
+<option value="5">Offset 180 g · + R$ 0,40/folha</option>
+</select>
+<fieldset class="finishing">
+<legend>Acabamentos e serviços extras</legend>
+<div class="service-card">
+<label class="check">
+<input id="binding" type="checkbox" aria-describedby="binding-help"> Incluir encadernação espiral</label>
+<p class="hint" id="binding-help">Preço por encadernação, de acordo com a quantidade de folhas. Todas as folhas deste orçamento serão reunidas em uma encadernação.</p>
+<table class="binding-table" aria-label="Preços da encadernação espiral">
+<thead>
+<tr>
+<th scope="col">Quantidade de folhas</th>
+<th scope="col">Valor</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<th scope="row">Até 50 folhas</th>
+<td>R$ 6,00</td>
+</tr>
+<tr>
+<th scope="row">51 a 100 folhas</th>
+<td>R$ 10,00</td>
+</tr>
+<tr>
+<th scope="row">101 a 250 folhas</th>
+<td>R$ 15,00</td>
+</tr>
+<tr>
+<th scope="row">251 folhas ou mais</th>
+<td>R$ 20,00</td>
+</tr>
+</tbody>
+</table>
+<p class="hint binding-note">Frente e verso: 2 páginas impressas equivalem a 1 folha.</p>
+</div>
+<div class="service-card">
+<label class="check">
+<input id="lamination" type="checkbox" aria-describedby="lamination-help"> Solicitar plastificação</label>
+<p class="hint" id="lamination-help">Preço sob consulta, não incluído no total. Informe o tamanho e a quantidade pelo WhatsApp.</p>
+</div>
+</fieldset>
+</section>
+<section class="result" aria-label="Seu orçamento">
+<div aria-live="polite" aria-atomic="true">
+<p class="total-label">Total do pedido</p>
+<div id="total" class="total">R$ 1,00</div>
+</div>
+<dl>
+<div>
+<dt>Tipo de impressão</dt>
+<dd id="print-type">
+</dd>
+</div>
+<div>
+<dt>Faixa</dt>
+<dd id="range">
+</dd>
+</div>
+<div>
+<dt>Preço na faixa</dt>
+<dd id="rate">
+</dd>
+</div>
+<div>
+<dt>Impressão</dt>
+<dd id="print">
+</dd>
+</div>
+<div>
+<dt>Folhas de papel</dt>
+<dd id="sheets">
+</dd>
+</div>
+<div id="extra-row" hidden>
+<dt>Acréscimo do papel</dt>
+<dd id="extra">
+</dd>
+</div>
+<div id="binding-row" hidden>
+<dt>Encadernação espiral (1 un.)</dt>
+<dd id="binding-price">
+</dd>
+</div>
+<div id="lamination-row" hidden>
+<dt>Plastificação</dt>
+<dd>Sob consulta · fora do total</dd>
+</div>
+</dl>
+<a id="whatsapp" class="primary" target="_blank" rel="noopener noreferrer">Enviar orçamento pelo WhatsApp <span aria-hidden="true">↗</span>
+</a>
+<button id="copy" class="secondary" type="button">Copiar orçamento</button>
+<p id="feedback" role="status">
+</p>
+<p class="note">O botão abre a conversa com a Campus Copy. O pedido só é enviado quando você confirmar no WhatsApp.</p>
+</section>
+<details>
+<summary>Ver tabela de preços</summary>
+<div class="table-wrap">
+<table>
+<caption id="caption">
+</caption>
+<thead>
+<tr>
+<th>Páginas</th>
+<th>Só frente</th>
+<th>Frente e verso</th>
+</tr>
+</thead>
+<tbody id="table">
+</tbody>
+</table>
+</div>
+<p class="hint">Valores por página em sulfite 75 g. O preço da faixa é aplicado a todas as páginas do pedido. Outros papéis têm acréscimo por folha utilizada.</p>
+</details>
+<footer>A4 · Campus Copy<br>
+<span>Mandou? Tá pronto!</span>
+</footer>
+</main>
+</body>
+</html>

@@ -1,0 +1,540 @@
+:root {
+    color-scheme: dark;
+    --bg: #0e1424;
+    --card: #192238;
+    --line: #2b385a;
+    --text: #e9edfb;
+    --muted: #a8bad8;
+    --active: #e8ecfa
+}
+
+* {
+    box-sizing: border-box
+}
+
+body {
+    margin: 0;
+    background: var(--bg);
+    color: var(--text);
+    font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+    font-size: 16px;
+    line-height: 1.5
+}
+
+main {
+    max-width: 510px;
+    margin: 0 auto;
+    padding: 26px 20px 30px
+}
+
+header {
+    margin-bottom: 20px
+}
+
+.brand {
+    font-size: 13px;
+    letter-spacing: .12em;
+    font-weight: 800;
+    color: #8ecbff;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 12px
+}
+
+.cmyk {
+    display: flex;
+    gap: 5px
+}
+
+.cmyk i {
+    display: block;
+    width: 7px;
+    height: 18px;
+    border-radius: 8px;
+    background: #00b5e8
+}
+
+.cmyk i:nth-child(2) {
+    background: #ed1382
+}
+
+.cmyk i:nth-child(3) {
+    background: #ffda00
+}
+
+h1 {
+    font-size: 25px;
+    line-height: 1.2;
+    letter-spacing: -.6px;
+    margin: 0 0 5px;
+    font-weight: 800
+}
+
+header p {
+    color: var(--muted);
+    margin: 0;
+    font-size: 15px
+}
+
+.tabs {
+    display: flex;
+    background: #222e4b;
+    border-radius: 15px;
+    padding: 4px;
+    margin-bottom: 22px;
+    gap: 4px
+}
+
+button,
+input,
+select,
+a {
+    font: inherit
+}
+
+button,
+a,
+select,
+input[type=checkbox] {
+    -webkit-tap-highlight-color: transparent
+}
+
+button {
+    cursor: pointer;
+    color: var(--text)
+}
+
+.tabs button {
+    flex: 1;
+    border: 0;
+    padding: 12px 8px;
+    border-radius: 11px;
+    background: transparent;
+    font-weight: 650;
+    color: var(--muted);
+    min-height: 48px
+}
+
+.tabs button[aria-pressed=true] {
+    background: var(--active);
+    color: #0d1d3a
+}
+
+.label {
+    display: block;
+    font-weight: 650;
+    margin-bottom: 8px
+}
+
+.quantity {
+    display: grid;
+    grid-template-columns: 51px 1fr 51px;
+    gap: 8px
+}
+
+.quantity button,
+.quantity input {
+    background: var(--card);
+    border: 1px solid var(--line);
+    border-radius: 13px;
+    height: 62px
+}
+
+.quantity button {
+    font-size: 24px
+}
+
+.quantity input {
+    width: 100%;
+    min-width: 0;
+    text-align: center;
+    font-size: 32px;
+    font-weight: 800;
+    color: var(--text);
+    appearance: textfield;
+    -moz-appearance: textfield
+}
+
+.quantity input::-webkit-inner-spin-button {
+    appearance: none
+}
+
+.presets {
+    display: flex;
+    gap: 7px;
+    margin-top: 10px;
+    flex-wrap: wrap
+}
+
+.presets button {
+    background: var(--card);
+    border: 1px solid var(--line);
+    border-radius: 24px;
+    min-width: 40px;
+    min-height: 38px;
+    padding: 5px 13px
+}
+
+.presets button.selected {
+    border-color: #93bdf5;
+    background: #273b5d
+}
+
+.hint {
+    font-size: 14px;
+    color: var(--muted);
+    line-height: 1.5;
+    margin: 9px 0 0
+}
+
+.check {
+    display: flex;
+    gap: 10px;
+    align-items: center;
+    margin: 17px 0;
+    font-weight: 550;
+    min-height: 30px
+}
+
+.check input {
+    accent-color: #e8ecfa;
+    width: 20px;
+    height: 20px;
+    margin: 0
+}
+
+.paper-label {
+    margin-top: 18px
+}
+
+select {
+    width: 100%;
+    min-height: 50px;
+    border: 1px solid var(--line);
+    background: var(--card);
+    color: var(--text);
+    border-radius: 12px;
+    padding: 10px 32px 10px 12px;
+    font-size: 15px
+}
+
+.result {
+    margin-top: 24px;
+    background: var(--card);
+    border: 1px solid var(--line);
+    border-radius: 17px;
+    padding: 20px
+}
+
+.total-label {
+    font-size: 14px;
+    color: var(--muted);
+    margin: 0
+}
+
+.total {
+    font-weight: 850;
+    font-size: clamp(32px, 10vw, 52px);
+    letter-spacing: -1.5px;
+    line-height: 1.25;
+    margin: 3px 0 14px;
+    overflow-wrap: anywhere
+}
+
+dl {
+    margin: 0 0 22px;
+    padding-top: 12px;
+    border-top: 1px dashed var(--line);
+    font-size: 14px
+}
+
+dl>div {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    gap: 16px;
+    margin: 5px 0
+}
+
+dt {
+    color: var(--muted)
+}
+
+dd {
+    text-align: right;
+    margin: 0;
+    font-weight: 650
+}
+
+.primary,
+.secondary {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    min-height: 51px;
+    border-radius: 12px;
+    text-decoration: none;
+    text-align: center;
+    font-weight: 750;
+    font-size: 15px;
+    padding: 12px
+}
+
+.primary {
+    background: var(--active);
+    color: #0d1d3a;
+    border: 0
+}
+
+.secondary {
+    background: transparent;
+    color: var(--text);
+    border: 1px solid #415275;
+    margin-top: 10px
+}
+
+.note {
+    font-size: 13px;
+    line-height: 1.5;
+    color: var(--muted);
+    margin: 12px 0 0
+}
+
+#feedback {
+    font-size: 14px;
+    color: #afdfc2;
+    margin: 8px 0 0;
+    min-height: 0
+}
+
+#feedback:empty {
+    display: none
+}
+
+#error {
+    font-size: 14px;
+    color: #ffc5ba;
+    margin: 8px 0
+}
+
+details {
+    margin-top: 18px;
+    border: 1px solid var(--line);
+    border-radius: 13px;
+    padding: 14px
+}
+
+summary {
+    cursor: pointer;
+    font-size: 15px;
+    font-weight: 650;
+    min-height: 24px
+}
+
+.table-wrap {
+    overflow: auto
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 14px;
+    margin-top: 12px;
+    text-align: left
+}
+
+caption {
+    text-align: left;
+    font-weight: 700;
+    margin-bottom: 10px
+}
+
+th {
+    color: var(--muted);
+    font-weight: 500
+}
+
+td,
+th {
+    padding: 10px 5px;
+    border-bottom: 1px solid var(--line);
+    white-space: nowrap
+}
+
+footer {
+    text-align: center;
+    color: var(--muted);
+    font-size: 13px;
+    margin-top: 24px
+}
+
+footer span {
+    display: inline-block;
+    margin-top: 3px;
+    color: #d2dff4;
+    font-weight: 650
+}
+
+button:hover,
+.secondary:hover {
+    filter: brightness(1.12)
+}
+
+:focus-visible {
+    outline: 3px solid #66c7ff;
+    outline-offset: 3px
+}
+
+[hidden] {
+    display: none !important
+}
+
+.primary[aria-disabled=true] {
+    opacity: .5;
+    pointer-events: none
+}
+
+button:disabled {
+    opacity: .5;
+    cursor: default
+}
+
+@media(min-width:750px) {
+    main {
+        padding-top: 42px
+    }
+}
+
+@media(max-width:350px) {
+    main {
+        padding: 18px 12px
+    }
+
+    .result {
+        padding: 15px
+    }
+
+    .quantity {
+        grid-template-columns: 44px 1fr 44px
+    }
+
+    h1 {
+        font-size: 23px
+    }
+}
+
+.type-dot {
+    display: inline-block;
+    width: 12px;
+    height: 12px;
+    border-radius: 50%;
+    margin-right: 7px;
+    flex-shrink: 0
+}
+
+.type-dot.mono {
+    background: linear-gradient(90deg, #111 50%, #fff 50%);
+    border: 1px solid #8996ac
+}
+
+.type-dot.color {
+    background: conic-gradient(#00b5e8, #ed1382, #ffda00, #00b5e8)
+}
+
+.tabs {
+    border: 1px solid #53698e
+}
+
+.tabs button {
+    font-size: 15px
+}
+
+.finishing {
+    border: 0;
+    border-top: 1px solid var(--line);
+    padding: 15px 0 0;
+    margin: 24px 0 0;
+    min-width: 0
+}
+
+.finishing legend {
+    font-weight: 650;
+    padding: 0 8px 0 0
+}
+
+.finishing .check {
+    margin: 10px 0
+}
+
+.finishing .hint+.check {
+    margin-top: 20px
+}
+
+.check input {
+    flex-shrink: 0
+}
+
+.tabs button[aria-pressed=true] {
+    box-shadow: 0 0 0 2px #8ecbff inset
+}
+
+.service-card {
+    margin-top: 12px;
+    padding: 16px;
+    background: var(--card);
+    border: 1px solid var(--line);
+    border-radius: 13px
+}
+
+.service-card .check {
+    margin: 0 0 10px
+}
+
+.binding-table {
+    margin: 16px 0 0;
+    font-size: 14px;
+    table-layout: fixed
+}
+
+.binding-table th,
+.binding-table td {
+    padding: 11px 8px;
+    white-space: normal
+}
+
+.binding-table thead th {
+    font-size: 14px;
+    background: #222e4b
+}
+
+.binding-table th:first-child {
+    width: 66%
+}
+
+.binding-table th:last-child,
+.binding-table td {
+    text-align: right
+}
+
+.binding-table tbody th {
+    font-weight: 500;
+    color: var(--text)
+}
+
+.binding-table td {
+    font-weight: 750;
+    font-variant-numeric: tabular-nums
+}
+
+.binding-table tbody tr:last-child>* {
+    border-bottom: 0
+}
+
+.binding-note {
+    padding-top: 10px;
+    border-top: 1px solid var(--line);
+    margin-top: 4px
+}
