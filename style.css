@@ -18,7 +18,30 @@ body {
     color: var(--text);
     font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
     font-size: 16px;
-    line-height: 1.5
+    line-height: 1.5;
+    transition: background-color .5s ease
+}
+
+body::before {
+    content: "";
+    position: fixed;
+    inset: 0;
+    z-index: -1;
+    pointer-events: none;
+    background:
+        radial-gradient(90% 60% at 0% 0%, rgba(0, 181, 232, .16), transparent 60%),
+        radial-gradient(90% 60% at 100% 0%, rgba(237, 19, 130, .14), transparent 60%),
+        radial-gradient(110% 70% at 50% 100%, rgba(255, 218, 0, .10), transparent 65%);
+    opacity: 0;
+    transition: opacity .6s ease
+}
+
+body[data-print-type=color] {
+    background: #191430
+}
+
+body[data-print-type=color]::before {
+    opacity: 1
 }
 
 main {
@@ -32,35 +55,16 @@ header {
 }
 
 .brand {
-    font-size: 13px;
-    letter-spacing: .12em;
-    font-weight: 800;
-    color: #8ecbff;
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
     margin-bottom: 12px
 }
 
-.cmyk {
-    display: flex;
-    gap: 5px
-}
-
-.cmyk i {
+.logo {
     display: block;
-    width: 7px;
-    height: 18px;
-    border-radius: 8px;
-    background: #00b5e8
-}
-
-.cmyk i:nth-child(2) {
-    background: #ed1382
-}
-
-.cmyk i:nth-child(3) {
-    background: #ffda00
+    width: min(250px, 68%);
+    height: auto;
+    background: #fff;
+    padding: 10px 16px;
+    border-radius: 14px
 }
 
 h1 {

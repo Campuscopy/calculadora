@@ -1,5 +1,5 @@
 'use strict';
-const ranges = [3, 10, 20, 30, 50, 100, 250, 500, Infinity];
+const ranges = [3, 10, 20, 30, 50, 100, 250, 500, 1000, Infinity];
 const prices = {
     pb: [
         [100, 90],
@@ -124,6 +124,8 @@ function renderTable() {
 
 function setColor(value) {
     color = value;
+    document.body.dataset.printType = value;
+    document.querySelector('meta[name="theme-color"]')?.setAttribute('content', value === 'color' ? '#191430' : '#0e1424');
     document.querySelectorAll('[data-color]').forEach(b => b.setAttribute('aria-pressed', String(b.dataset.color === color)));
     renderTable();
 }
