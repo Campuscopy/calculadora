@@ -1,59 +1,32 @@
 'use strict';
-const ranges = [3, 10, 20, 30, 50, 100, 250, 500, 1000, Infinity];
-const prices = {
-    pb: [
-        [100, 90],
-        [80, 75],
-        [70, 65],
-        [65, 60],
-        [60, 55],
-        [50, 45],
-        [40, 35],
-        [35, 30],
-        [30, 25]
-    ],
-    color: [
-        [130, 120],
-        [120, 115],
-        [110, 105],
-        [100, 95],
-        [90, 85],
-        [80, 75],
-        [75, 70],
-        [60, 57],
-        [55, 52]
-    ]
-};
-const papers = [{
-    name: 'Sulfite 75 g',
-    extra: 0
-}, {
-    name: 'Sulfite 90 g',
-    extra: 10
-}, {
-    name: 'Sulfite 120 g',
-    extra: 15
-}, {
-    name: 'Monolúcido 90 g',
-    extra: 30
-}, {
-    name: 'Monolúcido 120 g',
-    extra: 40
-}, {
-    name: 'Offset 180 g',
-    extra: 40
-}];
+const cents = v => Math.round(v * 100);
+const tiers = CONFIG_PRECOS.faixas.map(f => ({
+    ate: f.ate,
+    pb: { frente: cents(f.pb.frente), frenteVerso: cents(f.pb.frenteVerso) },
+    color: { frente: cents(f.color.frente), frenteVerso: cents(f.color.frenteVerso) }
+})).sort((a, b) => a.ate - b.ate);
+const papers = CONFIG_PRECOS.papeis.map(p => ({
+    name: p.nome,
+    extra: cents(p.adicional)
+}));
+const bindingTiers = CONFIG_PRECOS.encadernacao.map(e => ({
+    ate: e.ate,
+    preco: cents(e.preco)
+})).sort((a, b) => a.ate - b.ate);
 const money = cents => (cents / 100).toLocaleString('pt-BR', {
     style: 'currency',
     currency: 'BRL'
 });
-const rangeLabel = i => i === 8 ? '501 ou mais' : `${i===0?1:ranges[i-1]+1} a ${ranges[i]}`;
-const bindingPrice = sheets => sheets <= 50 ? 600 : sheets <= 100 ? 1000 : sheets <= 250 ? 1500 : 2000;
+const rangeLabel = i => {
+    const from = i === 0 ? 1 : tiers[i - 1].ate + 1;
+    return tiers[i].ate === Infinity ? `${from} ou mais` : `${from} a ${tiers[i].ate}`;
+};
+const bindingPrice = sheets => bindingTiers.find(t => sheets <= t.ate).preco;
 
 function calculate(pages, color, duplex, paper, binding = false) {
-    if (!Number.isInteger(pages) || pages < 1 || pages > 100000 || !Object.hasOwn(prices, color) || typeof duplex !== 'boolean' || !Number.isInteger(paper) || !papers[paper]) throw new Error('Configuração inválida');
-    const index = ranges.findIndex(max => pages <= max),
-        rate = prices[color][index][duplex ? 1 : 0],
+    if (!Number.isInteger(pages) || pages < 1 || pages > 100000 || (color !== 'pb' && color !== 'color') || typeof duplex !== 'boolean' || !Number.isInteger(paper) || !papers[paper]) throw new Error('Configuração inválida');
+    const index = tiers.findIndex(t => pages <= t.ate),
+        rate = tiers[index][color][duplex ? 'frenteVerso' : 'frente'],
         sheets = duplex ? Math.ceil(pages / 2) : pages,
         print = pages * rate,
         extra = sheets * papers[paper].extra;
@@ -119,7 +92,18 @@ function update() {
 
 function renderTable() {
     $('caption').textContent = color === 'pb' ? 'Preto e branco · A4' : 'Colorida · A4';
-    $('table').innerHTML = prices[color].map((p, i) => `<tr><td>${rangeLabel(i)}</td><td>${money(p[0])}</td><td>${money(p[1])}</td></tr>`).join('');
+    $('table').innerHTML = tiers.map((t, i) => `<tr><td>${rangeLabel(i)}</td><td>${money(t[color].frente)}</td><td>${money(t[color].frenteVerso)}</td></tr>`).join('');
+}
+
+function renderPapers() {
+    $('paper').innerHTML = papers.map((p, i) => `<option value="${i}">${p.name} · ${p.extra === 0 ? 'sem acréscimo' : `+ ${money(p.extra)}/folha`}</option>`).join('');
+}
+
+function renderBindingTable() {
+    document.querySelector('.binding-table tbody').innerHTML = bindingTiers.map((t, i) => {
+        const label = t.ate === Infinity ? `${bindingTiers[i - 1].ate + 1} folhas ou mais` : i === 0 ? `Até ${t.ate} folhas` : `${bindingTiers[i - 1].ate + 1} a ${t.ate} folhas`;
+        return `<tr><th scope="row">${label}</th><td>${money(t.preco)}</td></tr>`;
+    }).join('');
 }
 
 function setColor(value) {
@@ -158,6 +142,8 @@ $('copy').addEventListener('click', async () => {
         $('feedback').textContent = 'Não foi possível copiar. Use o botão do WhatsApp.'
     }
 });
+renderPapers();
+renderBindingTable();
 renderTable();
 update();
 if (document.modelContext?.registerTool) {
@@ -184,7 +170,7 @@ if (document.modelContext?.registerTool) {
                     paper: {
                         type: 'integer',
                         minimum: 0,
-                        maximum: 5
+                        maximum: papers.length - 1
                     },
                     binding: {
                         type: 'boolean'

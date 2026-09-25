@@ -288,8 +288,8 @@ dd {
 }
 
 .primary {
-    background: var(--active);
-    color: #0d1d3a;
+    background: #25d366;
+    color: #fff;
     border: 0
 }
 
@@ -383,6 +383,7 @@ footer span {
 }
 
 button:hover,
+.primary:hover,
 .secondary:hover {
     filter: brightness(1.12)
 }
